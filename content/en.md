@@ -12,7 +12,7 @@ I focus on converting noisy real-world data into reliable model pipelines and me
 ### Seoul National University of Science and Technology (SeoulTech)
 - B.S. in Computer Science and Engineering (Junior, 3rd Year 2nd Semester)
 - Expected Graduation: February 2027
-- GPA: **3.95/4.5**
+- GPA: **4.0/4.5**
 - Department of Computer Science Outstanding Student Merit Scholarship (Fall 2024, tuition 20% reduction)
 - Transferred from Environmental Engineering to Computer Science (Spring 2022)
 
