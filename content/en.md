@@ -13,7 +13,7 @@ I focus on converting noisy real-world data into reliable model pipelines and me
 - B.S. in Computer Science and Engineering (Junior, 3rd Year 2nd Semester)
 - Expected Graduation: February 2027
 - GPA: **3.95/4.5**
-- Academic Excellence Scholarship (Fall 2024, tuition 20% reduction)
+- Department of Computer Science Outstanding Student Merit Scholarship (Fall 2024, tuition 20% reduction)
 - Transferred from Environmental Engineering to Computer Science (Spring 2022)
 
 ## experience
@@ -26,9 +26,8 @@ I focus on converting noisy real-world data into reliable model pipelines and me
 
 ## awards
 - **Samsung AI Challenge 2025 - 2nd Place (Excellence Prize, KRW 5,000,000)**
-- SeoulTech Department of Computer Science Scholarship (2025, KRW 250,000)
 - SeoulTech Excellence Award for Field Training Essay (Encouragement Prize, 2025)
-- Academic Excellence Scholarship (Fall 2024)
+- Department of Computer Science Outstanding Student Merit Scholarship (Fall 2024)
 
 ## projects
 ### project:samsung-ai-challenge
