@@ -1,5 +1,5 @@
 ## hero
-Portfolio landing for lab applications and research collaboration.
+Research portfolio for graduate admissions and lab collaboration.
 
 ## about
 I am an undergraduate in Computer Science and Engineering at Seoul National University of Science and Technology (SeoulTech), expected to graduate in February 2027.
@@ -26,6 +26,7 @@ I focus on converting noisy real-world data into reliable model pipelines and me
 
 ## awards
 - **Samsung AI Challenge 2025 - 2nd Place (Excellence Prize, KRW 5,000,000)**
+- SeoulTech Department of Computer Science Scholarship (2025, KRW 250,000)
 - SeoulTech Excellence Award for Field Training Essay (Encouragement Prize, 2025)
 - Academic Excellence Scholarship (Fall 2024)
 
@@ -65,4 +66,4 @@ tags: LangChain, RAG, FAISS, Finance Data
 - Foundation: Linear Algebra, Discrete Mathematics, Calculus
 
 ## contact
-I am open to research collaboration and undergraduate research assistant opportunities.
+I am open to graduate research opportunities and lab collaboration.

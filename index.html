@@ -17,11 +17,23 @@
   <body>
     <div class="bg-texture" aria-hidden="true"></div>
 
-    <header class="topbar container">
-      <a class="brand" href="#hero">Junyoung Kwon</a>
-      <div class="lang-toggle" role="group" aria-label="Language toggle">
-        <button type="button" class="lang-btn" data-lang-btn="en">EN</button>
-        <button type="button" class="lang-btn" data-lang-btn="ko">KR</button>
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a class="brand" href="#hero">
+          <span class="brand-title">Junyoung Kwon</span>
+          <span class="brand-sub">Graduate Research Portfolio</span>
+        </a>
+        <nav class="topnav" aria-label="Primary">
+          <a href="#about" data-i18n="nav_about"></a>
+          <a href="#experience" data-i18n="nav_experience"></a>
+          <a href="#projects" data-i18n="nav_projects"></a>
+          <a href="#publications" data-i18n="nav_publications"></a>
+          <a href="#contact" data-i18n="nav_contact"></a>
+        </nav>
+        <div class="lang-toggle" role="group" aria-label="Language toggle">
+          <button type="button" class="lang-btn" data-lang-btn="en">EN</button>
+          <button type="button" class="lang-btn" data-lang-btn="ko">KR</button>
+        </div>
       </div>
     </header>
 
@@ -31,6 +43,11 @@
           <p class="eyebrow" data-i18n="hero_label"></p>
           <h1 id="hero-title" class="display" data-profile="name"></h1>
           <p class="headline" data-profile-lang="headline"></p>
+          <div class="focus-row">
+            <span class="focus-chip">AI for Finance</span>
+            <span class="focus-chip">ML Research</span>
+            <span class="focus-chip">Quantitative Modeling</span>
+          </div>
           <div class="metric-row" id="metric-row"></div>
           <div class="cta-row">
             <a class="btn btn-primary" href="#projects" data-i18n="cta_projects"></a>
