@@ -1,0 +1,18 @@
+{
+  "name": "Junyoung Kwon",
+  "headline_en": "Computer Science undergraduate focused on ML for financial markets, document understanding, and decision analytics.",
+  "headline_ko": "금융 시계열, 문서 이해, 의사결정 최적화에 집중하는 컴퓨터공학 학부 연구 지향 인재입니다.",
+  "email": "junoung6215@gmail.com",
+  "social_links": {
+    "github": "",
+    "linkedin": ""
+  },
+  "resume_pdf_path": "assets/files/resume-junyoung-kwon.pdf",
+  "featured_project_ids": ["samsung-ai-challenge", "lg-aimers", "investment-chatbot"],
+  "metrics": {
+    "gpa": "GPA 3.95/4.5",
+    "award": "Samsung AI Challenge 2nd Place",
+    "portfolio": "22.8% CAGR (2021-2025)"
+  },
+  "profile_image": "assets/img/profile-placeholder.svg"
+}

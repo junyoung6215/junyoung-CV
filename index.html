@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Junyoung Kwon portfolio landing page" />
+    <title>Junyoung Kwon | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Serif+4:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <script defer src="assets/js/main.js"></script>
+  </head>
+  <body>
+    <div class="bg-texture" aria-hidden="true"></div>
+
+    <header class="topbar container">
+      <a class="brand" href="#hero">Junyoung Kwon</a>
+      <div class="lang-toggle" role="group" aria-label="Language toggle">
+        <button type="button" class="lang-btn" data-lang-btn="en">EN</button>
+        <button type="button" class="lang-btn" data-lang-btn="ko">KR</button>
+      </div>
+    </header>
+
+    <main id="hero" class="container stack-lg">
+      <section class="hero section reveal" id="hero-section" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow" data-i18n="hero_label"></p>
+          <h1 id="hero-title" class="display" data-profile="name"></h1>
+          <p class="headline" data-profile-lang="headline"></p>
+          <div class="metric-row" id="metric-row"></div>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#projects" data-i18n="cta_projects"></a>
+            <a class="btn btn-secondary" id="resume-link" target="_blank" rel="noreferrer" data-i18n="cta_resume"></a>
+          </div>
+        </div>
+        <figure class="hero-photo-wrap">
+          <img id="profile-image" class="hero-photo" src="assets/img/profile-placeholder.svg" alt="Junyoung Kwon profile photo" />
+        </figure>
+      </section>
+
+      <section class="section reveal" id="about" aria-labelledby="about-title">
+        <h2 id="about-title" data-i18n="section_about"></h2>
+        <div class="prose" data-section="about"></div>
+      </section>
+
+      <section class="section reveal" id="education" aria-labelledby="education-title">
+        <h2 id="education-title" data-i18n="section_education"></h2>
+        <div class="prose" data-section="education"></div>
+      </section>
+
+      <section class="section reveal" id="experience" aria-labelledby="experience-title">
+        <h2 id="experience-title" data-i18n="section_experience"></h2>
+        <div class="prose" data-section="experience"></div>
+      </section>
+
+      <section class="section reveal" id="awards" aria-labelledby="awards-title">
+        <h2 id="awards-title" data-i18n="section_awards"></h2>
+        <div class="prose" data-section="awards"></div>
+      </section>
+
+      <section class="section reveal" id="projects" aria-labelledby="projects-title">
+        <h2 id="projects-title" data-i18n="section_projects"></h2>
+        <div id="projects-grid" class="projects-grid"></div>
+      </section>
+
+      <section class="section reveal" id="publications" aria-labelledby="publications-title">
+        <h2 id="publications-title" data-i18n="section_publications"></h2>
+        <div class="prose" data-section="publications"></div>
+      </section>
+
+      <section class="section reveal" id="skills" aria-labelledby="skills-title">
+        <h2 id="skills-title" data-i18n="section_skills"></h2>
+        <div class="prose" data-section="skills"></div>
+      </section>
+
+      <section class="section reveal" id="contact" aria-labelledby="contact-title">
+        <h2 id="contact-title" data-i18n="section_contact"></h2>
+        <div class="contact-card">
+          <p class="contact-label" data-i18n="contact_email"></p>
+          <a id="email-link" class="email-link"></a>
+          <div id="social-links" class="social-links"></div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
