@@ -3,18 +3,23 @@ const SECTION_IDS = [
   "about",
   "education",
   "experience",
+  "media",
   "awards",
   "projects",
   "publications",
   "skills",
+  "languages",
+  "references",
   "contact"
 ];
 
 const UI_TEXT = {
   en: {
-    hero_label: "Graduate Application Portfolio",
+    hero_label: "ML Portfolio for Graduate Research",
+    hero_note: "Building data-aware systems for finance and document understanding.",
     cta_projects: "View Research Projects",
-    cta_resume: "Download CV",
+    cta_resume_pdf: "Download CV (PDF)",
+    cta_resume_docx: "Download CV (DOCX)",
     nav_about: "About",
     nav_experience: "Experience",
     nav_projects: "Projects",
@@ -23,17 +28,22 @@ const UI_TEXT = {
     section_about: "About & Research Interests",
     section_education: "Education",
     section_experience: "Research Experience",
+    section_media: "Media",
     section_awards: "Awards",
     section_projects: "Selected Research Projects",
     section_publications: "Publications & Presentations",
     section_skills: "Technical Skills",
+    section_languages: "Languages",
+    section_references: "Reference",
     section_contact: "Contact",
     contact_email: "Email"
   },
   ko: {
-    hero_label: "대학원 진학 포트폴리오",
+    hero_label: "대학원 진학·랩 컨택용 포트폴리오",
+    hero_note: "금융 데이터와 문서 AI로 실제 성과를 만들어내는 연구형 학부생입니다.",
     cta_projects: "연구 프로젝트 보기",
-    cta_resume: "이력서 PDF",
+    cta_resume_pdf: "이력서 PDF",
+    cta_resume_docx: "이력서 DOCX",
     nav_about: "소개",
     nav_experience: "연구경험",
     nav_projects: "프로젝트",
@@ -42,10 +52,13 @@ const UI_TEXT = {
     section_about: "소개 및 연구 관심",
     section_education: "학력",
     section_experience: "연구 경험",
+    section_media: "언론/홍보",
     section_awards: "수상",
     section_projects: "주요 연구 프로젝트",
     section_publications: "논문 및 발표",
     section_skills: "기술 스택",
+    section_languages: "언어",
+    section_references: "레퍼런스",
     section_contact: "연락처",
     contact_email: "이메일"
   }
@@ -190,6 +203,10 @@ function renderProjects(projects, orderedIds) {
   const byId = new Map(projects.map((p) => [p.id, p]));
   const ordered = orderedIds.map((id) => byId.get(id)).filter(Boolean);
 
+  if (!ordered.length) {
+    return '<p class="empty">No projects selected yet.</p>';
+  }
+
   return ordered
     .map((project) => {
       const tags = (project.tags || [])
@@ -239,6 +256,28 @@ function renderSocialLinks(links) {
   }
 }
 
+function setResumeLinks(profile) {
+  const pdfLink = document.getElementById("resume-link-pdf");
+  if (pdfLink) {
+    if (profile.resume_pdf_path) {
+      pdfLink.href = profile.resume_pdf_path;
+      pdfLink.style.display = "inline-flex";
+    } else {
+      pdfLink.style.display = "none";
+    }
+  }
+
+  const docxLink = document.getElementById("resume-link-docx");
+  if (docxLink) {
+    if (profile.resume_docx_path) {
+      docxLink.href = profile.resume_docx_path;
+      docxLink.style.display = "inline-flex";
+    } else {
+      docxLink.style.display = "none";
+    }
+  }
+}
+
 function renderProfile(profile, lang) {
   document.querySelectorAll("[data-profile='name']").forEach((el) => {
     el.textContent = profile.name;
@@ -255,11 +294,6 @@ function renderProfile(profile, lang) {
       .join("");
   }
 
-  const resumeLink = document.getElementById("resume-link");
-  if (resumeLink) {
-    resumeLink.href = profile.resume_pdf_path;
-  }
-
   const emailLink = document.getElementById("email-link");
   if (emailLink) {
     emailLink.href = `mailto:${profile.email}`;
@@ -271,14 +305,12 @@ function renderProfile(profile, lang) {
     profileImage.src = profile.profile_image;
   }
 
+  setResumeLinks(profile);
   renderSocialLinks(profile.social_links || {});
 }
 
 function renderSections(sections, lang) {
   for (const id of SECTION_IDS) {
-    if (id === "projects") continue;
-    if (id === "hero" || id === "contact") continue;
-
     const node = document.querySelector(`[data-section='${id}']`);
     if (!node) continue;
     node.innerHTML = markdownToHtml(sections[id] || "");
@@ -289,6 +321,11 @@ function renderSections(sections, lang) {
   const grid = document.getElementById("projects-grid");
   if (grid) {
     grid.innerHTML = renderProjects(projects, window.__profileData.featured_project_ids || []);
+  }
+
+  const heroNote = document.querySelector('[data-i18n="hero_note"]');
+  if (heroNote) {
+    heroNote.textContent = UI_TEXT[lang].hero_note || "";
   }
 
   document.documentElement.lang = lang;

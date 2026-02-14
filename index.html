@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Junyoung Kwon portfolio landing page" />
-    <title>Junyoung Kwon | Portfolio</title>
+    <title>Junyoung Kwon | Research Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Serif+4:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Noto+Serif+KR:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/css/styles.css" />
@@ -21,7 +21,7 @@
       <div class="container topbar-inner">
         <a class="brand" href="#hero">
           <span class="brand-title">Junyoung Kwon</span>
-          <span class="brand-sub">Graduate Research Portfolio</span>
+          <span class="brand-sub">ML Research Portfolio</span>
         </a>
         <nav class="topnav" aria-label="Primary">
           <a href="#about" data-i18n="nav_about"></a>
@@ -38,24 +38,26 @@
     </header>
 
     <main id="hero" class="container stack-lg">
-      <section class="hero section reveal" id="hero-section" aria-labelledby="hero-title">
+      <section class="hero section reveal" aria-labelledby="hero-title">
         <div class="hero-copy">
           <p class="eyebrow" data-i18n="hero_label"></p>
           <h1 id="hero-title" class="display" data-profile="name"></h1>
           <p class="headline" data-profile-lang="headline"></p>
           <div class="focus-row">
             <span class="focus-chip">AI for Finance</span>
-            <span class="focus-chip">ML Research</span>
-            <span class="focus-chip">Quantitative Modeling</span>
+            <span class="focus-chip">Document Intelligence</span>
+            <span class="focus-chip">Decision Analytics</span>
           </div>
           <div class="metric-row" id="metric-row"></div>
           <div class="cta-row">
             <a class="btn btn-primary" href="#projects" data-i18n="cta_projects"></a>
-            <a class="btn btn-secondary" id="resume-link" target="_blank" rel="noreferrer" data-i18n="cta_resume"></a>
+            <a class="btn btn-secondary" id="resume-link-pdf" target="_blank" rel="noreferrer" data-i18n="cta_resume_pdf"></a>
+            <a class="btn btn-ghost" id="resume-link-docx" target="_blank" rel="noreferrer" data-i18n="cta_resume_docx"></a>
           </div>
         </div>
         <figure class="hero-photo-wrap">
           <img id="profile-image" class="hero-photo" src="assets/img/profile-placeholder.svg" alt="Junyoung Kwon profile photo" />
+          <figcaption class="hero-note" data-i18n="hero_note"></figcaption>
         </figure>
       </section>
 
@@ -72,6 +74,11 @@
       <section class="section reveal" id="experience" aria-labelledby="experience-title">
         <h2 id="experience-title" data-i18n="section_experience"></h2>
         <div class="prose" data-section="experience"></div>
+      </section>
+
+      <section class="section reveal" id="media" aria-labelledby="media-title">
+        <h2 id="media-title" data-i18n="section_media"></h2>
+        <div class="prose" data-section="media"></div>
       </section>
 
       <section class="section reveal" id="awards" aria-labelledby="awards-title">
@@ -92,6 +99,16 @@
       <section class="section reveal" id="skills" aria-labelledby="skills-title">
         <h2 id="skills-title" data-i18n="section_skills"></h2>
         <div class="prose" data-section="skills"></div>
+      </section>
+
+      <section class="section reveal" id="languages" aria-labelledby="languages-title">
+        <h2 id="languages-title" data-i18n="section_languages"></h2>
+        <div class="prose" data-section="languages"></div>
+      </section>
+
+      <section class="section reveal" id="references" aria-labelledby="references-title">
+        <h2 id="references-title" data-i18n="section_references"></h2>
+        <div class="prose" data-section="references"></div>
       </section>
 
       <section class="section reveal" id="contact" aria-labelledby="contact-title">

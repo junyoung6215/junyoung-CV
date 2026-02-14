@@ -1,18 +1,20 @@
 {
   "name": "Junyoung Kwon",
-  "headline_en": "Computer Science undergraduate preparing for graduate study in ML for financial markets, document understanding, and decision analytics.",
-  "headline_ko": "금융 시계열, 문서 이해, 의사결정 최적화를 연구하며 대학원 진학을 준비하는 컴퓨터공학 학부생입니다.",
+  "headline_en": "Machine learning engineer focused on financial modeling, document understanding, and decision analytics for portfolio optimization.",
+  "headline_ko": "금융 모델링·문서 AI·의사결정 분석 기반 포트폴리오 최적화를 연구하는 ML 엔지니어입니다.",
   "email": "junoung6215@gmail.com",
   "social_links": {
     "github": "",
     "linkedin": ""
   },
-  "resume_pdf_path": "assets/files/resume-junyoung-kwon.pdf",
+  "resume_pdf_path": "assets/files/CV_권준영.pdf",
+  "resume_docx_path": "assets/files/Resume_Junyoung_Kwon_English_postech.docx",
   "featured_project_ids": ["samsung-ai-challenge", "lg-aimers", "investment-chatbot"],
   "metrics": {
     "gpa": "GPA 4.0/4.5",
     "award": "Samsung AI Challenge 2nd Place",
-    "portfolio": "22.8% CAGR (2021-2025)"
+    "portfolio": "22.8% CAGR (2021-2025)",
+    "toeic": "TOEIC 840"
   },
   "profile_image": "assets/img/profile-placeholder.svg"
 }
