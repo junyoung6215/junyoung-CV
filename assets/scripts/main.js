@@ -214,6 +214,59 @@ function markdownToHtml(markdown) {
   return html;
 }
 
+function parseHeadingBlocks(markdown) {
+  const lines = markdown.replace(/\r/g, "").split("\n");
+  const blocks = [];
+  let current = null;
+
+  for (const rawLine of lines) {
+    const line = rawLine.trimEnd();
+    const heading = line.match(/^###\s+(.+)$/);
+
+    if (heading) {
+      if (current) {
+        current.body = current.lines.join("\n").trim();
+        blocks.push(current);
+      }
+      current = {
+        title: heading[1].trim(),
+        lines: []
+      };
+      continue;
+    }
+
+    if (current) {
+      current.lines.push(line);
+    }
+  }
+
+  if (current) {
+    current.body = current.lines.join("\n").trim();
+    blocks.push(current);
+  }
+
+  return blocks;
+}
+
+function parseAwards(markdown) {
+  const items = markdown
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line.startsWith("- "))
+    .map((line) => line.slice(2).trim());
+
+  const awards = [];
+
+  for (let index = 0; index < items.length; index += 2) {
+    awards.push({
+      title: items[index] || "",
+      description: items[index + 1] || ""
+    });
+  }
+
+  return awards;
+}
+
 function parseProjects(sectionText) {
   const chunks = sectionText
     .split(/\n(?=###\s*project:)/)
@@ -286,7 +339,7 @@ function renderProjects(projects, orderedIds, lang) {
         .join("");
 
       return `
-        <article class="glass-card project-card">
+        <article class="surface project-card">
           <p class="project-index">${escapeHtml(UI_TEXT[lang].project_prefix)} ${String(index + 1).padStart(2, "0")}</p>
           <h3>${inlineMarkdown(project.title || "")}</h3>
           <p class="project-meta">${inlineMarkdown(project.period || "")}</p>
@@ -295,6 +348,53 @@ function renderProjects(projects, orderedIds, lang) {
         </article>
       `;
     })
+    .join("");
+}
+
+function inferExperienceLabel(title, lang) {
+  const source = title.toLowerCase();
+
+  if (source.includes("research") || source.includes("연구")) {
+    return lang === "ko" ? "연구" : "Research";
+  }
+  if (source.includes("intern")) {
+    return lang === "ko" ? "인턴십" : "Internship";
+  }
+  if (source.includes("teaching") || source.includes("튜터") || source.includes("교육")) {
+    return lang === "ko" ? "교육" : "Teaching";
+  }
+  return lang === "ko" ? "추가 경험" : "Additional";
+}
+
+function renderExperience(markdown, lang) {
+  const blocks = parseHeadingBlocks(markdown);
+
+  return blocks
+    .map((block, index) => {
+      const cardClass = index < 2 ? "experience-card major" : "experience-card";
+      return `
+        <article class="${cardClass}">
+          <span class="experience-label">${escapeHtml(inferExperienceLabel(block.title, lang))}</span>
+          <h4>${inlineMarkdown(block.title)}</h4>
+          <div class="experience-body">${markdownToHtml(block.body)}</div>
+        </article>
+      `;
+    })
+    .join("");
+}
+
+function renderAwards(markdown) {
+  const awards = parseAwards(markdown);
+
+  return awards
+    .map(
+      (award) => `
+        <article class="award-item">
+          <h4 class="award-title">${inlineMarkdown(award.title)}</h4>
+          <p class="award-desc">${inlineMarkdown(award.description)}</p>
+        </article>
+      `
+    )
     .join("");
 }
 
@@ -417,42 +517,29 @@ function renderProfile(profile, lang) {
 function renderSections(sections, profile, lang) {
   document.querySelectorAll("[data-section]").forEach((node) => {
     const key = node.getAttribute("data-section");
+    if (key === "experience" || key === "awards") {
+      return;
+    }
     node.innerHTML = markdownToHtml(sections[key] || "");
   });
+
+  const experienceTrack = document.getElementById("experience-track");
+  if (experienceTrack) {
+    experienceTrack.innerHTML = renderExperience(sections.experience || "", lang);
+  }
+
+  const awardsList = document.getElementById("awards-list");
+  if (awardsList) {
+    awardsList.innerHTML = renderAwards(sections.awards || "");
+  }
 
   const projectsGrid = document.getElementById("projects-grid");
   if (projectsGrid) {
     const projects = parseProjects(sections.projects || "");
     projectsGrid.innerHTML = renderProjects(projects, profile.featured_project_ids || [], lang);
-    bindGlassCards(projectsGrid);
   }
 
   document.documentElement.lang = lang;
-}
-
-function bindGlassCards(scope = document) {
-  scope.querySelectorAll(".glass-card").forEach((card) => {
-    if (card.dataset.glassBound === "true") {
-      return;
-    }
-
-    const updatePointer = (event) => {
-      const rect = card.getBoundingClientRect();
-      const x = ((event.clientX - rect.left) / rect.width) * 100;
-      const y = ((event.clientY - rect.top) / rect.height) * 100;
-      card.style.setProperty("--pointer-x", `${x}%`);
-      card.style.setProperty("--pointer-y", `${y}%`);
-    };
-
-    const resetPointer = () => {
-      card.style.removeProperty("--pointer-x");
-      card.style.removeProperty("--pointer-y");
-    };
-
-    card.addEventListener("pointermove", updatePointer);
-    card.addEventListener("pointerleave", resetPointer);
-    card.dataset.glassBound = "true";
-  });
 }
 
 function setupRevealAnimations() {
@@ -506,7 +593,6 @@ async function init() {
       setLangButtons(selected);
     };
 
-    bindGlassCards();
     setupRevealAnimations();
     applyLanguage(detectDefaultLang());
 
@@ -518,7 +604,7 @@ async function init() {
     const lang = detectDefaultLang();
     document.title = UI_TEXT[lang].page_title;
     document.body.innerHTML = `
-      <main style="width:min(720px, calc(100vw - 2rem)); margin:6rem auto; font-family: Sora, sans-serif;">
+      <main style="width:min(720px, calc(100vw - 2rem)); margin:6rem auto; font-family: Instrument Sans, sans-serif;">
         <div style="padding:2rem; border-radius:28px; background:rgba(255,255,255,0.58); box-shadow:0 20px 50px rgba(31,47,73,0.12);">
           <h1 style="margin:0 0 0.75rem; color:#10233d;">${escapeHtml(UI_TEXT[lang].load_error_title)}</h1>
           <p style="margin:0; color:#44556c;">${escapeHtml(UI_TEXT[lang].load_error_body)}</p>

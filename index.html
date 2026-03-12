@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@500;600;700&family=Sora:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Instrument+Sans:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/styles/styles.css" />
@@ -19,18 +19,16 @@
       <span class="ambient ambient-a"></span>
       <span class="ambient ambient-b"></span>
       <span class="ambient ambient-c"></span>
-      <span class="ambient ambient-d"></span>
-      <div class="ambient-mesh"></div>
     </div>
 
     <header class="topbar">
-      <div class="topbar-shell glass-card">
+      <div class="topbar-shell">
         <a class="brand" href="#hero" aria-label="Go to top">
           <span class="brand-title" data-profile="name"></span>
           <span class="brand-sub" data-i18n="brand_role"></span>
         </a>
 
-        <nav class="dock-nav" aria-label="Primary">
+        <nav class="topnav" aria-label="Primary">
           <a href="#trajectory" data-i18n="nav_story"></a>
           <a href="#spotlight" data-i18n="nav_spotlight"></a>
           <a href="#projects" data-i18n="nav_projects"></a>
@@ -38,26 +36,22 @@
           <a href="#contact" data-i18n="nav_contact"></a>
         </nav>
 
-        <div class="topbar-actions">
-          <div class="lang-toggle" role="group" aria-label="Language toggle">
-            <button type="button" class="lang-btn" data-lang-btn="en">EN</button>
-            <button type="button" class="lang-btn" data-lang-btn="ko">KR</button>
-          </div>
+        <div class="lang-toggle" role="group" aria-label="Language toggle">
+          <button type="button" class="lang-btn" data-lang-btn="en">EN</button>
+          <button type="button" class="lang-btn" data-lang-btn="ko">KR</button>
         </div>
       </div>
     </header>
 
     <main class="page-shell">
-      <section id="hero" class="hero-grid reveal" aria-labelledby="hero-title">
-        <article class="glass-card hero-card">
+      <section id="hero" class="hero-stage reveal" aria-labelledby="hero-title">
+        <article class="hero-intro surface">
           <p class="eyebrow" data-i18n="hero_label"></p>
           <h1 id="hero-title" class="display" data-profile="name"></h1>
           <p class="headline" data-profile-lang="headline"></p>
           <div class="prose hero-prose" data-section="hero"></div>
 
           <div class="focus-row" id="focus-row" aria-label="Research focus areas"></div>
-          <div class="metric-grid" id="metric-row"></div>
-
           <div class="cta-row">
             <a class="btn btn-primary" href="#projects" data-i18n="cta_projects"></a>
             <a class="btn btn-secondary" data-resume="pdf" target="_blank" rel="noreferrer" data-i18n="cta_resume_pdf"></a>
@@ -65,144 +59,168 @@
           </div>
         </article>
 
-        <aside class="hero-stack" aria-label="Profile summary">
-          <article class="glass-card profile-card">
-            <div class="profile-halo" aria-hidden="true"></div>
+        <aside class="hero-summary surface">
+          <div class="portrait-wrap">
             <img
               id="profile-image"
               class="hero-photo"
               src="assets/images/profile/profile-placeholder.svg"
               alt="Junyoung Kwon profile portrait"
             />
-            <div class="profile-caption">
-              <p class="mini-label" data-i18n="hero_current"></p>
-              <p class="status-line" data-i18n="hero_status"></p>
-            </div>
-          </article>
+          </div>
 
-          <article class="glass-card signal-card">
+          <div class="summary-block">
+            <p class="mini-label" data-i18n="hero_current"></p>
+            <p class="status-line" data-i18n="hero_status"></p>
+          </div>
+
+          <div class="summary-block">
             <p class="mini-label" data-i18n="hero_focus_title"></p>
             <div class="signal-list" id="focus-list"></div>
-          </article>
+          </div>
 
-          <article class="glass-card signal-card">
-            <p class="mini-label" data-i18n="hero_contact_title"></p>
-            <div class="prose compact-prose" data-section="contact"></div>
-            <a class="inline-email" data-email-link></a>
-          </article>
+          <div class="metric-grid" id="metric-row"></div>
         </aside>
       </section>
 
-      <section id="trajectory" class="section-shell reveal" aria-labelledby="trajectory-title">
-        <div class="section-heading">
-          <p class="section-kicker" data-i18n="section_story_kicker"></p>
-          <h2 id="trajectory-title" data-i18n="section_story"></h2>
-        </div>
-
-        <div class="trajectory-grid">
-          <article class="glass-card narrative-card" id="about">
-            <p class="card-tag" data-i18n="section_about_tag"></p>
-            <h3 data-i18n="section_about"></h3>
-            <div class="prose" data-section="about"></div>
-          </article>
-
-          <article class="glass-card narrative-card" id="education">
-            <p class="card-tag" data-i18n="section_education_tag"></p>
-            <h3 data-i18n="section_education"></h3>
-            <div class="prose" data-section="education"></div>
-          </article>
-
-          <article class="glass-card narrative-card" id="experience">
-            <p class="card-tag" data-i18n="section_experience_tag"></p>
-            <h3 data-i18n="section_experience"></h3>
-            <div class="prose" data-section="experience"></div>
-          </article>
-        </div>
-      </section>
-
-      <section id="spotlight" class="section-shell reveal" aria-labelledby="spotlight-title">
-        <div class="section-heading">
-          <p class="section-kicker" data-i18n="section_spotlight_kicker"></p>
-          <h2 id="spotlight-title" data-i18n="section_spotlight"></h2>
-        </div>
-
-        <div class="spotlight-grid">
-          <article class="glass-card detail-card" id="awards">
-            <p class="card-tag" data-i18n="section_awards_tag"></p>
-            <h3 data-i18n="section_awards"></h3>
-            <div class="prose" data-section="awards"></div>
-          </article>
-
-          <article class="glass-card detail-card" id="media">
-            <p class="card-tag" data-i18n="section_media_tag"></p>
-            <h3 data-i18n="section_media"></h3>
-            <div class="prose" data-section="media"></div>
-          </article>
-
-          <article class="glass-card detail-card" id="publications">
-            <p class="card-tag" data-i18n="section_publications_tag"></p>
-            <h3 data-i18n="section_publications"></h3>
-            <div class="prose" data-section="publications"></div>
-          </article>
-        </div>
-      </section>
-
-      <section id="projects" class="section-shell reveal" aria-labelledby="projects-title">
-        <div class="section-heading">
-          <p class="section-kicker" data-i18n="section_projects_kicker"></p>
-          <h2 id="projects-title" data-i18n="section_projects"></h2>
-        </div>
-
-        <div id="projects-grid" class="projects-grid"></div>
-      </section>
-
-      <section id="toolkit" class="section-shell reveal" aria-labelledby="toolkit-title">
-        <div class="section-heading">
-          <p class="section-kicker" data-i18n="section_toolkit_kicker"></p>
-          <h2 id="toolkit-title" data-i18n="section_toolkit"></h2>
-        </div>
-
-        <div class="toolkit-grid">
-          <article class="glass-card toolkit-card" id="skills">
-            <p class="card-tag" data-i18n="section_skills_tag"></p>
-            <h3 data-i18n="section_skills"></h3>
-            <div class="prose" data-section="skills"></div>
-          </article>
-
-          <article class="glass-card toolkit-card" id="languages">
-            <p class="card-tag" data-i18n="section_languages_tag"></p>
-            <h3 data-i18n="section_languages"></h3>
-            <div class="prose" data-section="languages"></div>
-          </article>
-
-          <article class="glass-card toolkit-card" id="references">
-            <p class="card-tag" data-i18n="section_references_tag"></p>
-            <h3 data-i18n="section_references"></h3>
-            <div class="prose" data-section="references"></div>
-          </article>
-        </div>
-      </section>
-
-      <section id="contact" class="section-shell reveal" aria-labelledby="contact-title">
-        <article class="glass-card contact-shell">
-          <div class="contact-copy">
-            <p class="section-kicker" data-i18n="section_contact_kicker"></p>
-            <h2 id="contact-title" data-i18n="section_contact"></h2>
-            <div class="prose" data-section="contact"></div>
-          </div>
-
-          <div class="contact-actions">
-            <p class="contact-label" data-i18n="contact_email"></p>
-            <a class="contact-email" data-email-link></a>
+      <div class="editorial-layout">
+        <aside class="sidebar-column reveal">
+          <article class="sidebar-panel surface">
+            <p class="mini-label" data-i18n="hero_contact_title"></p>
+            <a class="inline-email" data-email-link></a>
+            <div class="prose compact-prose" data-section="contact"></div>
             <div id="social-links" class="social-links"></div>
+          </article>
 
-            <div class="cta-row">
-              <a class="btn btn-secondary" data-resume="pdf" target="_blank" rel="noreferrer" data-i18n="cta_resume_pdf"></a>
-              <a class="btn btn-tertiary" data-resume="docx" target="_blank" rel="noreferrer" data-i18n="cta_resume_docx"></a>
+          <article class="sidebar-panel surface">
+            <p class="mini-label" data-i18n="section_projects_kicker"></p>
+            <p class="sidebar-note" data-i18n="section_projects"></p>
+            <a class="inline-link" href="#projects" data-i18n="cta_projects"></a>
+          </article>
+        </aside>
+
+        <div class="content-column">
+          <section id="trajectory" class="editorial-section reveal" aria-labelledby="trajectory-title">
+            <div class="section-rail">
+              <p class="section-kicker" data-i18n="section_story_kicker"></p>
+              <h2 id="trajectory-title" data-i18n="section_story"></h2>
             </div>
-          </div>
-        </article>
-      </section>
+
+            <div class="section-content">
+              <article class="feature-panel surface" id="about">
+                <p class="card-tag" data-i18n="section_about_tag"></p>
+                <h3 data-i18n="section_about"></h3>
+                <div class="prose" data-section="about"></div>
+              </article>
+
+              <div class="split-grid">
+                <article class="surface detail-panel" id="education">
+                  <p class="card-tag" data-i18n="section_education_tag"></p>
+                  <h3 data-i18n="section_education"></h3>
+                  <div class="prose" data-section="education"></div>
+                </article>
+
+                <article class="surface detail-panel detail-panel-wide" id="experience">
+                  <p class="card-tag" data-i18n="section_experience_tag"></p>
+                  <h3 data-i18n="section_experience"></h3>
+                  <div id="experience-track" class="experience-track"></div>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <section id="spotlight" class="editorial-section reveal" aria-labelledby="spotlight-title">
+            <div class="section-rail">
+              <p class="section-kicker" data-i18n="section_spotlight_kicker"></p>
+              <h2 id="spotlight-title" data-i18n="section_spotlight"></h2>
+            </div>
+
+            <div class="section-content stacked-grid">
+              <article class="surface detail-panel" id="awards">
+                <p class="card-tag" data-i18n="section_awards_tag"></p>
+                <h3 data-i18n="section_awards"></h3>
+                <div id="awards-list" class="awards-list"></div>
+              </article>
+
+              <div class="split-grid">
+                <article class="surface detail-panel" id="media">
+                  <p class="card-tag" data-i18n="section_media_tag"></p>
+                  <h3 data-i18n="section_media"></h3>
+                  <div class="prose" data-section="media"></div>
+                </article>
+
+                <article class="surface detail-panel" id="publications">
+                  <p class="card-tag" data-i18n="section_publications_tag"></p>
+                  <h3 data-i18n="section_publications"></h3>
+                  <div class="prose" data-section="publications"></div>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <section id="projects" class="editorial-section reveal" aria-labelledby="projects-title">
+            <div class="section-rail">
+              <p class="section-kicker" data-i18n="section_projects_kicker"></p>
+              <h2 id="projects-title" data-i18n="section_projects"></h2>
+            </div>
+
+            <div class="section-content">
+              <div id="projects-grid" class="projects-grid"></div>
+            </div>
+          </section>
+
+          <section id="toolkit" class="editorial-section reveal" aria-labelledby="toolkit-title">
+            <div class="section-rail">
+              <p class="section-kicker" data-i18n="section_toolkit_kicker"></p>
+              <h2 id="toolkit-title" data-i18n="section_toolkit"></h2>
+            </div>
+
+            <div class="section-content toolkit-grid">
+              <article class="surface detail-panel" id="skills">
+                <p class="card-tag" data-i18n="section_skills_tag"></p>
+                <h3 data-i18n="section_skills"></h3>
+                <div class="prose" data-section="skills"></div>
+              </article>
+
+              <article class="surface detail-panel" id="languages">
+                <p class="card-tag" data-i18n="section_languages_tag"></p>
+                <h3 data-i18n="section_languages"></h3>
+                <div class="prose" data-section="languages"></div>
+              </article>
+
+              <article class="surface detail-panel" id="references">
+                <p class="card-tag" data-i18n="section_references_tag"></p>
+                <h3 data-i18n="section_references"></h3>
+                <div class="prose" data-section="references"></div>
+              </article>
+            </div>
+          </section>
+
+          <section id="contact" class="editorial-section reveal" aria-labelledby="contact-title">
+            <div class="section-rail">
+              <p class="section-kicker" data-i18n="section_contact_kicker"></p>
+              <h2 id="contact-title" data-i18n="section_contact"></h2>
+            </div>
+
+            <div class="section-content">
+              <article class="contact-panel surface">
+                <div class="contact-copy">
+                  <div class="prose" data-section="contact"></div>
+                </div>
+
+                <div class="contact-actions">
+                  <p class="contact-label" data-i18n="contact_email"></p>
+                  <a class="contact-email" data-email-link></a>
+                  <div class="cta-row">
+                    <a class="btn btn-secondary" data-resume="pdf" target="_blank" rel="noreferrer" data-i18n="cta_resume_pdf"></a>
+                    <a class="btn btn-tertiary" data-resume="docx" target="_blank" rel="noreferrer" data-i18n="cta_resume_docx"></a>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </section>
+        </div>
+      </div>
     </main>
   </body>
 </html>
