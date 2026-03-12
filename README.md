@@ -1,55 +1,59 @@
 # Junyoung Portfolio Landing
 
-Bilingual (EN/KR) static portfolio landing page for professor/lab sharing.
+Bilingual static CV landing page built with plain HTML, CSS, and JavaScript.
 
 ## Stack
 - Static HTML/CSS/JS
-- Markdown-driven content (`content/en.md`, `content/ko.md`)
-- Structured profile config (`assets/data/profile.json`)
+- Markdown-driven content in `data/content/`
+- Structured profile config in `data/profile.json`
 - GitHub Pages deployment via Actions
 
-## Project Structure
-- `index.html`: page skeleton and section containers
-- `assets/css/styles.css`: visual system and responsive layout
-- `assets/js/main.js`: markdown parsing, language toggle, rendering
-- `content/en.md`: English content source
-- `content/ko.md`: Korean content source
-- `assets/data/profile.json`: profile/contact/metrics/project ordering
-- `assets/files/resume-junyoung-kwon.pdf`: downloadable resume
-- `assets/img/profile-placeholder.svg`: profile image placeholder
+## Folder Structure
+- `index.html`: page shell and section layout
+- `assets/styles/styles.css`: liquid-glass visual system and responsive layout
+- `assets/scripts/main.js`: content loading, markdown parsing, language toggle, rendering
+- `assets/images/profile/`: rendered profile photo and fallback placeholder
+- `data/profile.json`: profile metadata, metrics, and downloadable document paths
+- `data/content/en.md`: English copy source
+- `data/content/ko.md`: Korean copy source
+- `documents/current/`: current source-of-truth CV used by the site
+- `documents/archive/`: older resume/CV files kept only for reference
 - `.github/workflows/pages.yml`: GitHub Pages deployment workflow
 
 ## Run Locally
-Because `fetch()` is used for local content files, run a local web server:
+Because the page loads markdown and JSON via `fetch()`, run it behind a local web server:
 
 ```bash
-cd /Users/kwon_junyoung/Desktop/practice
+cd /Users/kwon_junyoung/Desktop/Seoultech/3rd_Winter/CV_forgithub
 python3 -m http.server 8000
 ```
 
-Then open: `http://localhost:8000`
+Then open `http://localhost:8000`.
 
-## Edit Content
-1. Update English copy in `content/en.md`
-2. Update Korean copy in `content/ko.md`
-3. Update personal metadata in `assets/data/profile.json`
-4. Replace profile image path in `assets/data/profile.json` (`profile_image`)
-5. Replace resume PDF at `assets/files/resume-junyoung-kwon.pdf` if needed
+## Edit Workflow
+1. Update personal metadata in `data/profile.json`
+2. Update English copy in `data/content/en.md`
+3. Update Korean copy in `data/content/ko.md`
+4. Replace the current CV in `documents/current/` if the source document changes
+5. Replace the profile image in `assets/images/profile/` if needed
 
-### Markdown Contract
-Each markdown file must keep fixed section headings:
+## Markdown Contract
+Each markdown file should keep these section headings:
 
 - `## hero`
 - `## about`
 - `## education`
 - `## experience`
+- `## media`
 - `## awards`
 - `## projects`
 - `## publications`
 - `## skills`
+- `## languages`
+- `## references`
 - `## contact`
 
-In `## projects`, use this format:
+Inside `## projects`, use this format:
 
 ```md
 ### project:project-id
@@ -60,19 +64,15 @@ tags: tag1, tag2, tag3
 - Bullet 2
 ```
 
-Project IDs must match `featured_project_ids` in `assets/data/profile.json`.
+Project IDs must match `featured_project_ids` in `data/profile.json`.
 
 ## Deploy to GitHub Pages
 1. Push this repo to GitHub.
-2. Ensure default branch is `main`.
-3. In GitHub repo settings:
-   - Go to `Settings > Pages`
-   - Set source to `GitHub Actions`
-4. Push to `main`; deployment runs automatically.
-
-Your site URL will be:
-- `https://<github-username>.github.io/<repo-name>/`
+2. Ensure the default branch is `main`.
+3. In GitHub repo settings, go to `Settings > Pages`.
+4. Set the source to `GitHub Actions`.
+5. Push to `main` to trigger deployment.
 
 ## Notes
-- Current PDF file is copied from available local resume PDF. Replace with your final English PDF when ready.
-- Phone number is intentionally omitted; only email is rendered.
+- The current source document is `documents/current/CV_권준영_서울과학기술대학교_2026.pdf`.
+- Older resume files are archived and no longer drive site content.

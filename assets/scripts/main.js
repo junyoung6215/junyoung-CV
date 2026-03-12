@@ -1,0 +1,531 @@
+const UI_TEXT = {
+  en: {
+    page_title: "Junyoung Kwon | Liquid Glass CV",
+    page_description: "Research portfolio and CV landing page for Junyoung Kwon.",
+    brand_role: "Research Portfolio",
+    hero_label: "2026 CV / Research Portfolio",
+    hero_current: "Academic Status",
+    hero_status: "Senior (4th Year, 1st Semester) in Computer Science and Engineering at SeoulTech.",
+    hero_focus_title: "Research Interests",
+    hero_contact_title: "Contact Info",
+    focus_labels: ["Financial Markets ML", "Time Series Modeling", "Portfolio Optimization", "Decision Analytics"],
+    nav_story: "Trajectory",
+    nav_spotlight: "Recognition",
+    nav_projects: "Projects",
+    nav_toolkit: "Toolkit",
+    nav_contact: "Contact",
+    section_story_kicker: "Background",
+    section_story: "Research Trajectory",
+    section_about_tag: "Intent",
+    section_about: "Research Intent",
+    section_education_tag: "Foundation",
+    section_education: "Academic Background",
+    section_experience_tag: "Execution",
+    section_experience: "Applied Experience",
+    section_spotlight_kicker: "Validation",
+    section_spotlight: "Recognition & Output",
+    section_awards_tag: "Awards",
+    section_awards: "Awards",
+    section_media_tag: "Visibility",
+    section_media: "Media",
+    section_publications_tag: "Publication",
+    section_publications: "Publications",
+    section_projects_kicker: "Selected Work",
+    section_projects: "Featured Projects",
+    section_toolkit_kicker: "Capabilities",
+    section_toolkit: "Tools, Language, and Reference",
+    section_skills_tag: "Toolkit",
+    section_skills: "Technical Skills",
+    section_languages_tag: "Language",
+    section_languages: "Languages",
+    section_references_tag: "Reference",
+    section_references: "Reference",
+    section_contact_kicker: "Next Step",
+    section_contact: "Contact",
+    cta_projects: "View Projects",
+    cta_resume_pdf: "Download CV PDF",
+    cta_resume_docx: "Download CV DOCX",
+    contact_email: "Email",
+    empty_projects: "Featured projects will appear here.",
+    load_error_title: "Failed to load portfolio content.",
+    load_error_body: "Check the markdown and JSON files in this repository.",
+    profile_alt: "Junyoung Kwon profile portrait",
+    project_prefix: "Project"
+  },
+  ko: {
+    page_title: "권준영 | 리퀴드 글래스 CV",
+    page_description: "권준영 연구 포트폴리오 및 CV 랜딩 페이지",
+    brand_role: "연구 포트폴리오",
+    hero_label: "2026 CV 기반 포트폴리오",
+    hero_current: "학적 상태",
+    hero_status: "서울과기대 컴퓨터공학과 4학년 1학기 재학 중입니다.",
+    hero_focus_title: "연구 관심 분야",
+    hero_contact_title: "연락처",
+    focus_labels: ["금융 시장 ML", "금융 시계열", "포트폴리오 최적화", "의사결정 분석"],
+    nav_story: "배경",
+    nav_spotlight: "성과",
+    nav_projects: "프로젝트",
+    nav_toolkit: "기술",
+    nav_contact: "연락",
+    section_story_kicker: "배경",
+    section_story: "연구 궤적",
+    section_about_tag: "방향",
+    section_about: "연구 관심과 방향",
+    section_education_tag: "기반",
+    section_education: "학업 배경",
+    section_experience_tag: "실행",
+    section_experience: "실전 경험",
+    section_spotlight_kicker: "성과",
+    section_spotlight: "성과와 산출물",
+    section_awards_tag: "수상",
+    section_awards: "수상",
+    section_media_tag: "보도",
+    section_media: "언론 및 소개",
+    section_publications_tag: "발표",
+    section_publications: "논문 및 발표",
+    section_projects_kicker: "주요 작업",
+    section_projects: "주요 프로젝트",
+    section_toolkit_kicker: "역량",
+    section_toolkit: "기술 스택, 언어, 추천인",
+    section_skills_tag: "기술",
+    section_skills: "기술 스택",
+    section_languages_tag: "언어",
+    section_languages: "언어",
+    section_references_tag: "추천",
+    section_references: "추천인",
+    section_contact_kicker: "연락",
+    section_contact: "연락처",
+    cta_projects: "프로젝트 보기",
+    cta_resume_pdf: "CV PDF 다운로드",
+    cta_resume_docx: "CV DOCX 다운로드",
+    contact_email: "이메일",
+    empty_projects: "표시할 프로젝트가 아직 없습니다.",
+    load_error_title: "포트폴리오 콘텐츠를 불러오지 못했습니다.",
+    load_error_body: "저장소의 마크다운과 JSON 파일을 확인해 주세요.",
+    profile_alt: "권준영 프로필 이미지",
+    project_prefix: "프로젝트"
+  }
+};
+
+function fetchText(url) {
+  return fetch(url).then((res) => {
+    if (!res.ok) {
+      throw new Error(`Failed to load ${url}`);
+    }
+    return res.text();
+  });
+}
+
+function detectDefaultLang() {
+  const saved = localStorage.getItem("portfolio_lang");
+  if (saved === "en" || saved === "ko") {
+    return saved;
+  }
+  return navigator.language?.toLowerCase().startsWith("ko") ? "ko" : "en";
+}
+
+function parseSections(markdown) {
+  const sections = {};
+  const lines = markdown.replace(/\r/g, "").split("\n");
+  let currentSection = null;
+
+  for (const rawLine of lines) {
+    const line = rawLine.trimEnd();
+    const match = line.match(/^##\s+([a-z0-9-]+)\s*$/i);
+
+    if (match) {
+      currentSection = match[1].trim().toLowerCase();
+      sections[currentSection] = [];
+      continue;
+    }
+
+    if (currentSection) {
+      sections[currentSection].push(line);
+    }
+  }
+
+  for (const key of Object.keys(sections)) {
+    sections[key] = sections[key].join("\n").trim();
+  }
+
+  return sections;
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function inlineMarkdown(text) {
+  return escapeHtml(text)
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .replace(/\*(.+?)\*/g, "<em>$1</em>")
+    .replace(/\[(.+?)\]\((https?:[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noreferrer">$1</a>');
+}
+
+function markdownToHtml(markdown) {
+  if (!markdown) {
+    return "";
+  }
+
+  const lines = markdown.split("\n");
+  let html = "";
+  let inList = false;
+
+  const closeList = () => {
+    if (inList) {
+      html += "</ul>";
+      inList = false;
+    }
+  };
+
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+
+    if (!line) {
+      closeList();
+      continue;
+    }
+
+    if (line.startsWith("- ")) {
+      if (!inList) {
+        html += "<ul>";
+        inList = true;
+      }
+      html += `<li>${inlineMarkdown(line.slice(2).trim())}</li>`;
+      continue;
+    }
+
+    closeList();
+
+    if (line.startsWith("### ")) {
+      html += `<h3>${inlineMarkdown(line.slice(4).trim())}</h3>`;
+      continue;
+    }
+
+    html += `<p>${inlineMarkdown(line)}</p>`;
+  }
+
+  closeList();
+  return html;
+}
+
+function parseProjects(sectionText) {
+  const chunks = sectionText
+    .split(/\n(?=###\s*project:)/)
+    .map((chunk) => chunk.trim())
+    .filter(Boolean);
+
+  const projects = [];
+
+  for (const chunk of chunks) {
+    const lines = chunk.split("\n").map((line) => line.trim());
+    const firstLine = lines.shift();
+    const idMatch = firstLine?.match(/^###\s*project:([a-z0-9-]+)$/i);
+
+    if (!idMatch) {
+      continue;
+    }
+
+    const item = {
+      id: idMatch[1],
+      tags: []
+    };
+
+    let bodyMode = false;
+    const bodyLines = [];
+
+    for (const line of lines) {
+      if (!line) {
+        continue;
+      }
+
+      const kvMatch = line.match(/^([a-z_]+):\s*(.+)$/i);
+      if (kvMatch && !bodyMode) {
+        const key = kvMatch[1].toLowerCase();
+        const value = kvMatch[2].trim();
+
+        if (key === "tags") {
+          item.tags = value
+            .split(",")
+            .map((tag) => tag.trim())
+            .filter(Boolean);
+        } else {
+          item[key] = value;
+        }
+      } else {
+        bodyMode = true;
+        bodyLines.push(line);
+      }
+    }
+
+    item.body = bodyLines.join("\n");
+    projects.push(item);
+  }
+
+  return projects;
+}
+
+function renderProjects(projects, orderedIds, lang) {
+  const byId = new Map(projects.map((project) => [project.id, project]));
+  const ordered = orderedIds?.length ? orderedIds.map((id) => byId.get(id)).filter(Boolean) : projects;
+  const items = ordered.length ? ordered : projects;
+
+  if (!items.length) {
+    return `<p class="empty">${escapeHtml(UI_TEXT[lang].empty_projects)}</p>`;
+  }
+
+  return items
+    .map((project, index) => {
+      const tags = (project.tags || [])
+        .map((tag) => `<span class="project-tag">${inlineMarkdown(tag)}</span>`)
+        .join("");
+
+      return `
+        <article class="glass-card project-card">
+          <p class="project-index">${escapeHtml(UI_TEXT[lang].project_prefix)} ${String(index + 1).padStart(2, "0")}</p>
+          <h3>${inlineMarkdown(project.title || "")}</h3>
+          <p class="project-meta">${inlineMarkdown(project.period || "")}</p>
+          <div class="project-body">${markdownToHtml(project.body || "")}</div>
+          <div class="project-tags">${tags}</div>
+        </article>
+      `;
+    })
+    .join("");
+}
+
+function setLangButtons(lang) {
+  document.querySelectorAll("[data-lang-btn]").forEach((button) => {
+    const active = button.dataset.langBtn === lang;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", String(active));
+  });
+}
+
+function fillUIText(lang) {
+  const ui = UI_TEXT[lang];
+
+  document.querySelectorAll("[data-i18n]").forEach((node) => {
+    const key = node.getAttribute("data-i18n");
+    node.textContent = ui[key] || "";
+  });
+
+  document.title = ui.page_title;
+
+  const metaDescription = document.querySelector('meta[name="description"]');
+  if (metaDescription) {
+    metaDescription.setAttribute("content", ui.page_description);
+  }
+}
+
+function fillFocusAreas(lang) {
+  const labels = UI_TEXT[lang].focus_labels || [];
+
+  const focusRow = document.getElementById("focus-row");
+  if (focusRow) {
+    focusRow.innerHTML = labels.map((label) => `<span class="focus-chip">${escapeHtml(label)}</span>`).join("");
+  }
+
+  const focusList = document.getElementById("focus-list");
+  if (focusList) {
+    focusList.innerHTML = labels.map((label) => `<div class="signal-pill">${escapeHtml(label)}</div>`).join("");
+  }
+}
+
+function renderSocialLinks(links) {
+  const container = document.getElementById("social-links");
+  if (!container) {
+    return;
+  }
+
+  const validEntries = Object.entries(links || {}).filter(([, url]) => Boolean(url));
+  container.innerHTML = "";
+
+  if (!validEntries.length) {
+    container.hidden = true;
+    return;
+  }
+
+  container.hidden = false;
+
+  for (const [label, url] of validEntries) {
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.target = "_blank";
+    anchor.rel = "noreferrer";
+    anchor.textContent = label;
+    container.appendChild(anchor);
+  }
+}
+
+function setResumeLinks(profile) {
+  const linksByType = {
+    pdf: profile.resume_pdf_path,
+    docx: profile.resume_docx_path
+  };
+
+  Object.entries(linksByType).forEach(([type, href]) => {
+    document.querySelectorAll(`[data-resume="${type}"]`).forEach((node) => {
+      if (href) {
+        node.href = href;
+        node.style.display = "inline-flex";
+      } else {
+        node.removeAttribute("href");
+        node.style.display = "none";
+      }
+    });
+  });
+}
+
+function renderProfile(profile, lang) {
+  document.querySelectorAll('[data-profile="name"]').forEach((node) => {
+    node.textContent = profile.name || "";
+  });
+
+  document.querySelectorAll('[data-profile-lang="headline"]').forEach((node) => {
+    node.textContent = profile[`headline_${lang}`] || "";
+  });
+
+  const metricRow = document.getElementById("metric-row");
+  if (metricRow) {
+    metricRow.innerHTML = Object.values(profile.metrics || {})
+      .map((metric) => `<div class="metric-item">${inlineMarkdown(metric)}</div>`)
+      .join("");
+  }
+
+  document.querySelectorAll("[data-email-link]").forEach((node) => {
+    node.href = `mailto:${profile.email || ""}`;
+    node.textContent = profile.email || "";
+  });
+
+  const profileImage = document.getElementById("profile-image");
+  if (profileImage) {
+    if (profile.profile_image) {
+      profileImage.src = profile.profile_image;
+    }
+    profileImage.alt = UI_TEXT[lang].profile_alt;
+  }
+
+  setResumeLinks(profile);
+  renderSocialLinks(profile.social_links || {});
+}
+
+function renderSections(sections, profile, lang) {
+  document.querySelectorAll("[data-section]").forEach((node) => {
+    const key = node.getAttribute("data-section");
+    node.innerHTML = markdownToHtml(sections[key] || "");
+  });
+
+  const projectsGrid = document.getElementById("projects-grid");
+  if (projectsGrid) {
+    const projects = parseProjects(sections.projects || "");
+    projectsGrid.innerHTML = renderProjects(projects, profile.featured_project_ids || [], lang);
+    bindGlassCards(projectsGrid);
+  }
+
+  document.documentElement.lang = lang;
+}
+
+function bindGlassCards(scope = document) {
+  scope.querySelectorAll(".glass-card").forEach((card) => {
+    if (card.dataset.glassBound === "true") {
+      return;
+    }
+
+    const updatePointer = (event) => {
+      const rect = card.getBoundingClientRect();
+      const x = ((event.clientX - rect.left) / rect.width) * 100;
+      const y = ((event.clientY - rect.top) / rect.height) * 100;
+      card.style.setProperty("--pointer-x", `${x}%`);
+      card.style.setProperty("--pointer-y", `${y}%`);
+    };
+
+    const resetPointer = () => {
+      card.style.removeProperty("--pointer-x");
+      card.style.removeProperty("--pointer-y");
+    };
+
+    card.addEventListener("pointermove", updatePointer);
+    card.addEventListener("pointerleave", resetPointer);
+    card.dataset.glassBound = "true";
+  });
+}
+
+function setupRevealAnimations() {
+  const targets = document.querySelectorAll(".reveal");
+
+  if (!("IntersectionObserver" in window)) {
+    targets.forEach((node) => node.classList.add("is-visible"));
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    },
+    {
+      threshold: 0.16,
+      rootMargin: "0px 0px -8% 0px"
+    }
+  );
+
+  targets.forEach((node) => observer.observe(node));
+}
+
+async function init() {
+  try {
+    const [profile, enMarkdown, koMarkdown] = await Promise.all([
+      fetch("data/profile.json").then((response) => response.json()),
+      fetchText("data/content/en.md"),
+      fetchText("data/content/ko.md")
+    ]);
+
+    const sectionsByLang = {
+      en: parseSections(enMarkdown),
+      ko: parseSections(koMarkdown)
+    };
+
+    const applyLanguage = (lang) => {
+      const selected = lang === "ko" ? "ko" : "en";
+      localStorage.setItem("portfolio_lang", selected);
+      fillUIText(selected);
+      fillFocusAreas(selected);
+      renderProfile(profile, selected);
+      renderSections(sectionsByLang[selected], profile, selected);
+      setLangButtons(selected);
+    };
+
+    bindGlassCards();
+    setupRevealAnimations();
+    applyLanguage(detectDefaultLang());
+
+    document.querySelectorAll("[data-lang-btn]").forEach((button) => {
+      button.addEventListener("click", () => applyLanguage(button.dataset.langBtn));
+    });
+  } catch (error) {
+    console.error(error);
+    const lang = detectDefaultLang();
+    document.title = UI_TEXT[lang].page_title;
+    document.body.innerHTML = `
+      <main style="width:min(720px, calc(100vw - 2rem)); margin:6rem auto; font-family: Sora, sans-serif;">
+        <div style="padding:2rem; border-radius:28px; background:rgba(255,255,255,0.58); box-shadow:0 20px 50px rgba(31,47,73,0.12);">
+          <h1 style="margin:0 0 0.75rem; color:#10233d;">${escapeHtml(UI_TEXT[lang].load_error_title)}</h1>
+          <p style="margin:0; color:#44556c;">${escapeHtml(UI_TEXT[lang].load_error_body)}</p>
+        </div>
+      </main>
+    `;
+  }
+}
+
+init();

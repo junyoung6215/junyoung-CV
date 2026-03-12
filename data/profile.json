@@ -1,0 +1,20 @@
+{
+  "name": "Junyoung Kwon",
+  "headline_en": "Machine Learning for Financial Markets, Financial Time Series Modeling, Portfolio Optimization, and Decision Analytics.",
+  "headline_ko": "금융 시장을 위한 머신러닝, 금융 시계열 모델링, 포트폴리오 최적화, 의사결정 분석을 연구합니다.",
+  "email": "junoung6215@gmail.com",
+  "social_links": {
+    "github": "",
+    "linkedin": ""
+  },
+  "resume_pdf_path": "documents/current/CV_권준영_서울과학기술대학교_2026.pdf",
+  "resume_docx_path": "",
+  "featured_project_ids": ["samsung-ai-challenge", "lg-aimers", "investment-chatbot"],
+  "metrics": {
+    "gpa": "GPA 4.0/4.5",
+    "award": "Samsung AI Challenge 2nd Place",
+    "portfolio": "22.8% annual compound return (2021-2025)",
+    "toeic": "TOEIC 840"
+  },
+  "profile_image": "assets/images/profile/profile-photo-cv.jpg"
+}
