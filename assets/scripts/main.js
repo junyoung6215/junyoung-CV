@@ -554,14 +554,9 @@ function fillUIText(lang) {
 function fillFocusAreas(lang) {
   const labels = UI_TEXT[lang].focus_labels || [];
 
-  const focusRow = document.getElementById("focus-row");
-  if (focusRow) {
-    focusRow.innerHTML = labels.map((label) => `<span class="focus-chip">${escapeHtml(label)}</span>`).join("");
-  }
-
   const focusList = document.getElementById("focus-list");
   if (focusList) {
-    focusList.innerHTML = labels.map((label) => `<div class="signal-pill">${escapeHtml(label)}</div>`).join("");
+    focusList.innerHTML = labels.map((label) => `<li class="signal-pill">${escapeHtml(label)}</li>`).join("");
   }
 }
 

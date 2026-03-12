@@ -50,8 +50,6 @@
           <h1 id="hero-title" class="display" data-profile="name"></h1>
           <p class="headline" data-profile-lang="headline"></p>
           <div class="prose hero-prose" data-section="hero"></div>
-
-          <div class="focus-row" id="focus-row" aria-label="Research focus areas"></div>
           <div class="cta-row">
             <a class="btn btn-primary" href="#projects" data-i18n="cta_projects"></a>
             <a class="btn btn-secondary" data-resume="pdf" target="_blank" rel="noreferrer" data-i18n="cta_resume_pdf"></a>
@@ -76,7 +74,14 @@
 
           <div class="summary-block">
             <p class="mini-label" data-i18n="hero_focus_title"></p>
-            <div class="signal-list" id="focus-list"></div>
+            <ul class="signal-list" id="focus-list"></ul>
+          </div>
+
+          <div class="summary-block">
+            <p class="mini-label" data-i18n="hero_contact_title"></p>
+            <a class="inline-email" data-email-link></a>
+            <div class="prose compact-prose" data-section="contact"></div>
+            <div id="social-links" class="social-links"></div>
           </div>
         </aside>
       </section>
@@ -91,8 +96,8 @@
           <h2 id="trajectory-title" data-i18n="section_story"></h2>
         </div>
 
-        <div class="row-body row-body-three">
-          <article class="feature-panel surface" id="about">
+        <div class="row-body row-body-identity">
+          <article class="feature-panel surface feature-panel-wide" id="about">
             <p class="card-tag" data-i18n="section_about_tag"></p>
             <h3 data-i18n="section_about"></h3>
             <div class="prose" data-section="about"></div>
@@ -102,13 +107,6 @@
             <p class="card-tag" data-i18n="section_education_tag"></p>
             <h3 data-i18n="section_education"></h3>
             <div id="education-summary" class="education-summary"></div>
-          </article>
-
-          <article class="surface detail-panel" id="contact-snapshot">
-            <p class="card-tag" data-i18n="hero_contact_title"></p>
-            <a class="inline-email" data-email-link></a>
-            <div class="prose compact-prose" data-section="contact"></div>
-            <div id="social-links" class="social-links"></div>
           </article>
         </div>
       </section>
