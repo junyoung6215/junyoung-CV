@@ -2,28 +2,28 @@ const UI_TEXT = {
   en: {
     page_title: "Junyoung Kwon | Liquid Glass CV",
     page_description: "Research portfolio and CV landing page for Junyoung Kwon.",
-    brand_role: "Research Portfolio",
-    hero_label: "2026 CV / Research Portfolio",
+    brand_role: "Finance ML Portfolio",
+    hero_label: "Machine Learning / Finance / Decision Analytics",
     hero_current: "Academic Status",
     hero_status: "Senior (4th Year, 1st Semester) in Computer Science and Engineering at SeoulTech.",
-    hero_focus_title: "Research Interests",
-    hero_contact_title: "Contact Info",
+    hero_focus_title: "Core Areas",
+    hero_contact_title: "Reach",
     focus_labels: ["Financial Markets ML", "Time Series Modeling", "Portfolio Optimization", "Decision Analytics"],
-    nav_story: "Trajectory",
-    nav_spotlight: "Recognition",
+    nav_story: "Overview",
+    nav_spotlight: "Proof",
     nav_projects: "Projects",
-    nav_toolkit: "Toolkit",
+    nav_toolkit: "Foundation",
     nav_contact: "Contact",
-    section_story_kicker: "Background",
-    section_story: "Research Trajectory",
+    section_story_kicker: "Identity",
+    section_story: "Direction and Base",
     section_about_tag: "Intent",
-    section_about: "Research Intent",
-    section_education_tag: "Foundation",
-    section_education: "Academic Background",
+    section_about: "Research Direction",
+    section_education_tag: "Base",
+    section_education: "Academic Base",
     section_experience_tag: "Execution",
-    section_experience: "Applied Experience",
+    section_experience: "Where I Practiced It",
     section_spotlight_kicker: "Validation",
-    section_spotlight: "Recognition & Output",
+    section_spotlight: "External Proof",
     section_awards_tag: "Awards",
     section_awards: "Awards",
     section_media_tag: "Visibility",
@@ -31,10 +31,10 @@ const UI_TEXT = {
     section_publications_tag: "Publication",
     section_publications: "Publications",
     section_projects_kicker: "Selected Work",
-    section_projects: "Featured Projects",
-    section_toolkit_kicker: "Capabilities",
+    section_projects: "Representative Projects",
+    section_toolkit_kicker: "Foundation",
     section_toolkit: "Tools, Language, and Reference",
-    section_skills_tag: "Toolkit",
+    section_skills_tag: "Tools",
     section_skills: "Technical Skills",
     section_languages_tag: "Language",
     section_languages: "Languages",
@@ -55,38 +55,38 @@ const UI_TEXT = {
   ko: {
     page_title: "권준영 | 리퀴드 글래스 CV",
     page_description: "권준영 연구 포트폴리오 및 CV 랜딩 페이지",
-    brand_role: "연구 포트폴리오",
-    hero_label: "2026 CV 기반 포트폴리오",
+    brand_role: "Finance ML Portfolio",
+    hero_label: "머신러닝 / 금융 / 의사결정 분석",
     hero_current: "학적 상태",
     hero_status: "서울과기대 컴퓨터공학과 4학년 1학기 재학 중입니다.",
-    hero_focus_title: "연구 관심 분야",
+    hero_focus_title: "핵심 분야",
     hero_contact_title: "연락처",
     focus_labels: ["금융 시장 ML", "금융 시계열", "포트폴리오 최적화", "의사결정 분석"],
-    nav_story: "배경",
-    nav_spotlight: "성과",
+    nav_story: "개요",
+    nav_spotlight: "검증",
     nav_projects: "프로젝트",
-    nav_toolkit: "기술",
-    nav_contact: "연락",
-    section_story_kicker: "배경",
-    section_story: "연구 궤적",
+    nav_toolkit: "기반",
+    nav_contact: "연락처",
+    section_story_kicker: "정체성",
+    section_story: "방향과 기반",
     section_about_tag: "방향",
-    section_about: "연구 관심과 방향",
+    section_about: "연구 방향",
     section_education_tag: "기반",
-    section_education: "학업 배경",
+    section_education: "학업 기반",
     section_experience_tag: "실행",
     section_experience: "실전 경험",
-    section_spotlight_kicker: "성과",
-    section_spotlight: "성과와 산출물",
+    section_spotlight_kicker: "검증",
+    section_spotlight: "외부 검증",
     section_awards_tag: "수상",
     section_awards: "수상",
     section_media_tag: "보도",
     section_media: "언론 및 소개",
     section_publications_tag: "발표",
     section_publications: "논문 및 발표",
-    section_projects_kicker: "주요 작업",
-    section_projects: "주요 프로젝트",
-    section_toolkit_kicker: "역량",
-    section_toolkit: "기술 스택, 언어, 추천인",
+    section_projects_kicker: "대표 작업",
+    section_projects: "대표 프로젝트",
+    section_toolkit_kicker: "기반",
+    section_toolkit: "기술, 언어, 추천인",
     section_skills_tag: "기술",
     section_skills: "기술 스택",
     section_languages_tag: "언어",
@@ -323,6 +323,43 @@ function parseProjects(sectionText) {
   return projects;
 }
 
+function parseListItems(markdown) {
+  return markdown
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line.startsWith("- "))
+    .map((line) => line.slice(2).trim());
+}
+
+function splitProjectBody(body) {
+  const items = parseListItems(body);
+
+  if (!items.length) {
+    return {
+      outcome: "",
+      bodyMarkdown: body
+    };
+  }
+
+  const lastItem = items[items.length - 1];
+  const isOutcome = /achiev|award|rank|score|top|outperform|달성|수상|기록|상위|우수상|1위|2위|성과/i.test(lastItem);
+
+  if (!isOutcome) {
+    return {
+      outcome: "",
+      bodyMarkdown: body
+    };
+  }
+
+  return {
+    outcome: lastItem,
+    bodyMarkdown: items
+      .slice(0, -1)
+      .map((item) => `- ${item}`)
+      .join("\n")
+  };
+}
+
 function renderProjects(projects, orderedIds, lang) {
   const byId = new Map(projects.map((project) => [project.id, project]));
   const ordered = orderedIds?.length ? orderedIds.map((id) => byId.get(id)).filter(Boolean) : projects;
@@ -334,6 +371,7 @@ function renderProjects(projects, orderedIds, lang) {
 
   return items
     .map((project, index) => {
+      const projectParts = splitProjectBody(project.body || "");
       const tags = (project.tags || [])
         .map((tag) => `<span class="project-tag">${inlineMarkdown(tag)}</span>`)
         .join("");
@@ -343,7 +381,8 @@ function renderProjects(projects, orderedIds, lang) {
           <p class="project-index">${escapeHtml(UI_TEXT[lang].project_prefix)} ${String(index + 1).padStart(2, "0")}</p>
           <h3>${inlineMarkdown(project.title || "")}</h3>
           <p class="project-meta">${inlineMarkdown(project.period || "")}</p>
-          <div class="project-body">${markdownToHtml(project.body || "")}</div>
+          ${projectParts.outcome ? `<p class="project-outcome">${inlineMarkdown(projectParts.outcome)}</p>` : ""}
+          <div class="project-body">${markdownToHtml(projectParts.bodyMarkdown || project.body || "")}</div>
           <div class="project-tags">${tags}</div>
         </article>
       `;
