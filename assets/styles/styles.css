@@ -235,7 +235,6 @@ a {
 
 .hero-intro,
 .hero-summary,
-.sidebar-panel,
 .feature-panel,
 .detail-panel,
 .contact-panel,
@@ -430,25 +429,6 @@ html[lang="ko"] .project-card h3 {
   font-weight: 700;
 }
 
-.editorial-layout {
-  margin-top: 1.8rem;
-  display: grid;
-  grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);
-  gap: 1.5rem;
-  align-items: start;
-}
-
-.sidebar-column {
-  position: sticky;
-  top: 6.5rem;
-  display: grid;
-  gap: 1rem;
-}
-
-.sidebar-panel {
-  padding: 1.15rem 1.1rem;
-}
-
 .inline-email,
 .inline-link {
   text-decoration: none;
@@ -456,44 +436,37 @@ html[lang="ko"] .project-card h3 {
   font-weight: 700;
 }
 
-.compact-prose {
-  margin-top: 0.65rem;
-}
-
-.compact-prose p {
-  margin: 0.25rem 0 0;
-  font-size: 0.92rem;
-  color: #495461;
-}
-
-.content-column {
+.row-section {
+  margin-top: 1.6rem;
   display: grid;
-  gap: 1.2rem;
+  gap: 1rem;
 }
 
-.editorial-section {
-  display: grid;
-  grid-template-columns: 210px minmax(0, 1fr);
-  gap: 1.5rem;
-  align-items: start;
+.row-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-inline: 0.1rem;
 }
 
-.section-rail {
-  padding-top: 0.35rem;
-}
-
-.section-rail h2 {
-  margin: 0.3rem 0 0;
+.row-head h2 {
+  margin: 0.2rem 0 0;
   font-size: clamp(1.95rem, 3vw, 3rem);
   line-height: 0.96;
   letter-spacing: -0.04em;
   font-weight: 600;
 }
 
-.section-content,
-.stacked-grid {
+.row-body,
+.projects-grid,
+.experience-track {
   display: grid;
   gap: 1rem;
+}
+
+.row-body-three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .feature-panel,
@@ -503,30 +476,12 @@ html[lang="ko"] .project-card h3 {
   padding: 1.3rem 1.35rem;
 }
 
-.detail-panel-wide {
-  grid-column: 1 / -1;
-}
-
 .feature-panel h3,
 .detail-panel h3 {
   margin: 0.35rem 0 0;
   font-size: 1.55rem;
   line-height: 1.2;
   font-weight: 600;
-}
-
-.split-grid,
-.toolkit-grid {
-  display: grid;
-  gap: 1rem;
-}
-
-.split-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.toolkit-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .prose {
@@ -563,7 +518,16 @@ html[lang="ko"] .project-card h3 {
   color: var(--text);
 }
 
-.experience-track,
+.compact-prose {
+  margin-top: 0.65rem;
+}
+
+.compact-prose p {
+  margin: 0.25rem 0 0;
+  font-size: 0.92rem;
+  color: #495461;
+}
+
 .awards-list {
   margin-top: 1rem;
   display: grid;
@@ -571,7 +535,7 @@ html[lang="ko"] .project-card h3 {
 }
 
 .experience-track {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .experience-card,
@@ -630,10 +594,6 @@ html[lang="ko"] .project-card h3 {
   margin: 0.38rem 0;
 }
 
-.awards-list {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
 .award-item {
   padding: 1rem;
   display: grid;
@@ -654,12 +614,8 @@ html[lang="ko"] .project-card h3 {
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
-}
-
-.project-card:first-child {
-  grid-column: span 2;
 }
 
 .project-index {
@@ -799,22 +755,14 @@ button:focus-visible {
 
 @media (max-width: 1120px) {
   .hero-stage,
-  .editorial-layout,
-  .editorial-section,
   .contact-panel {
     grid-template-columns: 1fr;
   }
 
-  .sidebar-column {
-    position: static;
-  }
-
-  .section-rail {
-    padding-top: 0;
-  }
-
-  .toolkit-grid {
-    grid-template-columns: 1fr;
+  .row-body-three,
+  .projects-grid,
+  .experience-track {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -829,16 +777,12 @@ button:focus-visible {
     gap: 0.8rem 1rem;
   }
 
-  .split-grid,
   .projects-grid,
   .metric-grid,
   .experience-track,
-  .awards-list {
+  .awards-list,
+  .row-body-three {
     grid-template-columns: 1fr;
-  }
-
-  .project-card:first-child {
-    grid-column: auto;
   }
 
   .contact-actions {
@@ -861,7 +805,6 @@ button:focus-visible {
 
   .hero-intro,
   .hero-summary,
-  .sidebar-panel,
   .feature-panel,
   .detail-panel,
   .contact-panel,

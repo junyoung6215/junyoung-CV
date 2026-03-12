@@ -94,7 +94,7 @@ tags: LangChain, RAG, FAISS, 금융 데이터, 1위
 - English (TOEIC 840)
 
 ## references
-- **김성록 교수 (Prof. Sunglok Choi)**
+- **최성록 교수 (Prof. Sunglok Choi)**
 - 서울과학기술대학교 컴퓨터공학과
 - 연구 분야: Robotics, Autonomous Driving, 3D Computer Vision, Artificial Intelligence
 - 연구실: 미래관 327호
