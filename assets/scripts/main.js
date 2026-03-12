@@ -9,6 +9,12 @@ const UI_TEXT = {
     hero_focus_title: "Core Areas",
     hero_contact_title: "Reach",
     focus_labels: ["Financial Markets ML", "Time Series Modeling", "Portfolio Optimization", "Decision Analytics"],
+    metric_labels: {
+      gpa: "GPA",
+      award: "Highlight",
+      portfolio: "Track Record",
+      toeic: "English"
+    },
     nav_story: "Overview",
     nav_spotlight: "Proof",
     nav_projects: "Projects",
@@ -62,6 +68,12 @@ const UI_TEXT = {
     hero_focus_title: "핵심 분야",
     hero_contact_title: "연락처",
     focus_labels: ["금융 시장 ML", "금융 시계열", "포트폴리오 최적화", "의사결정 분석"],
+    metric_labels: {
+      gpa: "학점",
+      award: "주요 성과",
+      portfolio: "트랙 레코드",
+      toeic: "영어"
+    },
     nav_story: "개요",
     nav_spotlight: "검증",
     nav_projects: "프로젝트",
@@ -331,6 +343,21 @@ function parseListItems(markdown) {
     .map((line) => line.slice(2).trim());
 }
 
+function splitLabelValue(text) {
+  const index = text.indexOf(":");
+  if (index === -1) {
+    return {
+      label: "",
+      value: text.trim()
+    };
+  }
+
+  return {
+    label: text.slice(0, index).trim(),
+    value: text.slice(index + 1).trim()
+  };
+}
+
 function splitProjectBody(body) {
   const items = parseListItems(body);
 
@@ -437,6 +464,69 @@ function renderAwards(markdown) {
     .join("");
 }
 
+function renderEducation(markdown) {
+  const blocks = parseHeadingBlocks(markdown);
+  const block = blocks[0];
+
+  if (!block) {
+    return "";
+  }
+
+  const facts = parseListItems(block.body || "");
+  return `
+    <div class="edu-school">${inlineMarkdown(block.title)}</div>
+    <div class="edu-facts">
+      ${facts
+        .map((fact) => {
+          const parts = splitLabelValue(fact);
+          if (!parts.label) {
+            return `<div class="edu-fact"><span class="edu-value">${inlineMarkdown(parts.value)}</span></div>`;
+          }
+          return `<div class="edu-fact"><span class="edu-label">${inlineMarkdown(parts.label)}</span><span class="edu-value">${inlineMarkdown(parts.value)}</span></div>`;
+        })
+        .join("")}
+    </div>
+  `;
+}
+
+function renderSkills(markdown) {
+  const items = parseListItems(markdown);
+
+  return items
+    .map((item) => {
+      const parts = splitLabelValue(item);
+      return `
+        <article class="skill-group">
+          <p class="skill-group-label">${inlineMarkdown(parts.label || "Skill")}</p>
+          <p class="skill-group-value">${inlineMarkdown(parts.value || item)}</p>
+        </article>
+      `;
+    })
+    .join("");
+}
+
+function renderLanguages(markdown) {
+  return parseListItems(markdown)
+    .map((item) => `<span class="language-pill">${inlineMarkdown(item)}</span>`)
+    .join("");
+}
+
+function renderReference(markdown) {
+  const items = parseListItems(markdown);
+  if (!items.length) {
+    return "";
+  }
+
+  const [name, ...details] = items;
+
+  return `
+    <div class="reference-name">${inlineMarkdown(name)}</div>
+    <div class="reference-meta">
+      ${details.map((detail) => `<p>${inlineMarkdown(detail)}</p>`).join("")}
+    </div>
+  `;
+}
+
 function setLangButtons(lang) {
   document.querySelectorAll("[data-lang-btn]").forEach((button) => {
     const active = button.dataset.langBtn === lang;
@@ -531,8 +621,11 @@ function renderProfile(profile, lang) {
 
   const metricRow = document.getElementById("metric-row");
   if (metricRow) {
-    metricRow.innerHTML = Object.values(profile.metrics || {})
-      .map((metric) => `<div class="metric-item">${inlineMarkdown(metric)}</div>`)
+    metricRow.innerHTML = Object.entries(profile.metrics || {})
+      .map(([key, metric]) => {
+        const label = UI_TEXT[lang].metric_labels?.[key] || key;
+        return `<div class="metric-item"><span class="metric-label">${escapeHtml(label)}</span><span class="metric-value">${inlineMarkdown(metric)}</span></div>`;
+      })
       .join("");
   }
 
@@ -556,11 +649,16 @@ function renderProfile(profile, lang) {
 function renderSections(sections, profile, lang) {
   document.querySelectorAll("[data-section]").forEach((node) => {
     const key = node.getAttribute("data-section");
-    if (key === "experience" || key === "awards") {
+    if (key === "experience" || key === "awards" || key === "education" || key === "skills" || key === "languages" || key === "references") {
       return;
     }
     node.innerHTML = markdownToHtml(sections[key] || "");
   });
+
+  const educationSummary = document.getElementById("education-summary");
+  if (educationSummary) {
+    educationSummary.innerHTML = renderEducation(sections.education || "");
+  }
 
   const experienceTrack = document.getElementById("experience-track");
   if (experienceTrack) {
@@ -570,6 +668,21 @@ function renderSections(sections, profile, lang) {
   const awardsList = document.getElementById("awards-list");
   if (awardsList) {
     awardsList.innerHTML = renderAwards(sections.awards || "");
+  }
+
+  const skillsGroups = document.getElementById("skills-groups");
+  if (skillsGroups) {
+    skillsGroups.innerHTML = renderSkills(sections.skills || "");
+  }
+
+  const languagesStrip = document.getElementById("languages-strip");
+  if (languagesStrip) {
+    languagesStrip.innerHTML = renderLanguages(sections.languages || "");
+  }
+
+  const referenceCard = document.getElementById("reference-card");
+  if (referenceCard) {
+    referenceCard.innerHTML = renderReference(sections.references || "");
   }
 
   const projectsGrid = document.getElementById("projects-grid");

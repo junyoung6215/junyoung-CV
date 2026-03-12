@@ -397,9 +397,24 @@ h2,
   border-radius: var(--radius-lg);
   background: var(--surface-strong);
   box-shadow: var(--shadow);
+  display: grid;
+  align-content: space-between;
+  gap: 0.6rem;
+  line-height: 1.45;
+}
+
+.metric-label {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.metric-value {
+  color: var(--text);
   font-size: 1rem;
   font-weight: 700;
-  line-height: 1.45;
 }
 
 .row-section {
@@ -467,6 +482,80 @@ h2,
 .compact-prose p {
   margin: 0.28rem 0 0;
   color: #4b5663;
+}
+
+.education-summary,
+.skills-groups,
+.languages-strip,
+.reference-card {
+  margin-top: 1rem;
+}
+
+.edu-school,
+.reference-name {
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.edu-facts,
+.skills-groups {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.edu-fact,
+.skill-group {
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 0.22rem;
+}
+
+.edu-label,
+.skill-group-label {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.edu-value,
+.skill-group-value {
+  color: #42505e;
+  font-size: 0.94rem;
+  line-height: 1.65;
+}
+
+.languages-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.language-pill {
+  padding: 0.52rem 0.78rem;
+  border: 1px solid rgba(25, 32, 40, 0.06);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.8);
+  color: #3c4652;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.reference-meta {
+  margin-top: 0.7rem;
+  display: grid;
+  gap: 0.3rem;
+}
+
+.reference-meta p {
+  margin: 0;
+  color: #4b5663;
+  font-size: 0.92rem;
+  line-height: 1.6;
 }
 
 .prose {
